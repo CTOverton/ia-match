@@ -50,6 +50,7 @@ function compareDates(date1: string, date2: string) {
 }
 
 function cleanString(str: string) {
+  if (!str) return ''
   return str.toLowerCase().replace(/[^A-Z0-9]+/gi, '')
 }
 
