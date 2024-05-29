@@ -63,6 +63,22 @@ export default async function Compare({ params }: { params: { ids: string } }) {
     data.files.find((file: any) => file.source === 'derivative' && file.length),
   )
 
+  const thumbnails = results.map((data) => {
+    const dir = data.dir
+    const file = data.files.find(
+      (file: any) =>
+        file.source === 'original' &&
+        (file.format === 'PNG' ||
+          file.format === 'JPG' ||
+          file.format === 'JPEG' ||
+          file.name.includes('webp')),
+    )
+
+    if (!file) return null
+
+    return `https://archive.org${dir}/${file.name}`
+  })
+
   const compareData = results.map((data, index) => ({
     ...data.metadata,
     originalFileLength: originalFiles[index]?.length,
@@ -160,10 +176,10 @@ export default async function Compare({ params }: { params: { ids: string } }) {
         </div>
       </div>
       <div className={''}>
-        <div className={'mb-2 grid grid-cols-3 gap-4'}>
+        <div className={'mb-2 grid grid-cols-3'}>
           <div></div>
           {ids.map((id, index) => (
-            <div key={id} className={'overflow-clip rounded-md'}>
+            <div key={id} className={'mx-2 overflow-clip rounded-md'}>
               <iframe
                 src={`https://archive.org/embed/${id}`}
                 className={'aspect-video w-full bg-gray-400/10'}
@@ -178,6 +194,19 @@ export default async function Compare({ params }: { params: { ids: string } }) {
             'overflow-clip rounded-l-md ring-1 ring-inset ring-gray-400/20'
           }
         >
+          <div className={`grid grid-cols-3 text-sm odd:bg-gray-400/10`}>
+            <div className={'flex justify-between px-4 py-2'}>thumbnail</div>
+            {thumbnails.map((data, index) => (
+              <div className={'px-2 py-2'}>
+                <img
+                  key={index}
+                  className={'max-h-40 rounded-md object-contain'}
+                  src={data ?? ''}
+                  alt={'thumbnail'}
+                />
+              </div>
+            ))}
+          </div>
           {metadataCompareKeys.map(({ key, label, compare }) => {
             const difference = compareDates(
               compareData[0].date,
@@ -187,7 +216,7 @@ export default async function Compare({ params }: { params: { ids: string } }) {
             return (
               <div
                 key={key}
-                className={`grid grid-cols-3 gap-x-4 text-sm ${compare ? getBackground(compareField(key)) : 'odd:bg-gray-400/10'} `}
+                className={`grid grid-cols-3 text-sm ${compare ? getBackground(compareField(key)) : 'odd:bg-gray-400/10'} `}
               >
                 <div className={'flex justify-between px-4 py-2'}>
                   {label}
@@ -202,7 +231,7 @@ export default async function Compare({ params }: { params: { ids: string } }) {
                   )}
                 </div>
                 {compareData.map((data, index) => (
-                  <div key={index} className={'overflow-auto py-2'}>
+                  <div key={index} className={'overflow-auto px-2 py-2'}>
                     {data[key]}
                   </div>
                 ))}
