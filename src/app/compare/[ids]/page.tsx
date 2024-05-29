@@ -1,6 +1,7 @@
 import { faArrowRightArrowLeft } from '@fortawesome/free-solid-svg-icons/faArrowRightArrowLeft'
 import { faPlusMinus } from '@fortawesome/free-solid-svg-icons/faPlusMinus'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import IdButton from '@/components/idButton'
 
 async function getMetadata(id: string) {
   const res = await fetch(`https://archive.org/metadata/${id}`)
@@ -133,28 +134,14 @@ export default async function Compare({ params }: { params: { ids: string } }) {
       >
         <div className={'flex items-center justify-between'}>
           <div className={'flex space-x-2'}>
-            <a
-              className={
-                'rounded-md bg-gray-400/10 px-2 py-1 text-xs ring-1 ring-inset ring-gray-400/20'
-              }
-              href={`https://archive.org/details/${ids[0]}`}
-            >
-              {ids[0]}
-            </a>
+            <IdButton ids={ids} position={0} />
             <div className={'flex items-center justify-center'}>
               <FontAwesomeIcon
                 icon={faArrowRightArrowLeft}
                 className={'h-4 w-4 text-neutral-500'}
               />
             </div>
-            <a
-              className={
-                'rounded-md bg-gray-400/10 px-2 py-1 text-xs ring-1 ring-inset ring-gray-400/20'
-              }
-              href={`https://archive.org/details/${ids[1]}`}
-            >
-              {ids[1]}
-            </a>
+            <IdButton ids={ids} position={1} />
           </div>
 
           {/*<div className={'flex space-x-2'}>*/}
@@ -239,41 +226,6 @@ export default async function Compare({ params }: { params: { ids: string } }) {
             )
           })}
         </div>
-
-        {/*<table className={'col-span-2 w-full text-left'}>*/}
-        {/*  <thead>*/}
-        {/*    <tr>*/}
-        {/*      <th>Metadata</th>*/}
-        {/*      <th>Value</th>*/}
-
-        {/*      <th>Metadata</th>*/}
-        {/*      <th>Value</th>*/}
-        {/*    </tr>*/}
-        {/*  </thead>*/}
-        {/*  <tbody className={''}>*/}
-        {/*    */}
-        {/*    /!*<tr className={getBackground(compareField('title'))}>*!/*/}
-        {/*    /!*  <td>Title</td>*!/*/}
-        {/*    /!*  <td>{data.metadata.title}</td>*!/*/}
-        {/*    /!*</tr>*!/*/}
-        {/*    /!*<tr*!/*/}
-        {/*    /!*  className={getBackground(*!/*/}
-        {/*    /!*    compareOriginalFileField('length'),*!/*/}
-        {/*    /!*  )}*!/*/}
-        {/*    /!*>*!/*/}
-        {/*    /!*  <td>Original Length</td>*!/*/}
-        {/*    /!*  <td>{originalFile.length}</td>*!/*/}
-        {/*    /!*</tr>*!/*/}
-        {/*    /!*<tr*!/*/}
-        {/*    /!*  className={getBackground(*!/*/}
-        {/*    /!*    compareDerivativeFileField('length'),*!/*/}
-        {/*    /!*  )}*!/*/}
-        {/*    /!*>*!/*/}
-        {/*    /!*  <td>Derivative Length</td>*!/*/}
-        {/*    /!*  <td>{derivativeFile.length}</td>*!/*/}
-        {/*    /!*</tr>*!/*/}
-        {/*  </tbody>*/}
-        {/*</table>*/}
       </div>
     </main>
   )
