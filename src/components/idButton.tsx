@@ -71,7 +71,9 @@ function EditIdForm({ ids, position }: EditIdFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex min-w-60 flex-col rounded-md bg-white text-xs ring-1 ring-inset ring-gray-400/20 [--anchor-gap:4px] [--anchor-padding:4px]"
+      className={
+        'mt-1 flex min-w-60 flex-col rounded-md bg-white text-xs ring-1 ring-inset ring-gray-400/20'
+      }
     >
       <div className={'border-b border-b-gray-400/20 px-4 py-2 font-medium'}>
         Choose alternate id
