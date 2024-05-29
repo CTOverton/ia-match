@@ -197,7 +197,7 @@ export default async function Compare({ params }: { params: { ids: string } }) {
           <div className={`grid grid-cols-3 text-sm odd:bg-gray-400/10`}>
             <div className={'flex justify-between px-4 py-2'}>thumbnail</div>
             {thumbnails.map((data, index) => (
-              <div className={'px-2 py-2'}>
+              <div key={index} className={'px-2 py-2'}>
                 <img
                   key={index}
                   className={'max-h-40 rounded-md object-contain'}
